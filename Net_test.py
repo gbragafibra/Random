@@ -1,6 +1,6 @@
 import numpy as np
 import random
-
+import time # to implement timers
 
 class Network:
 
@@ -47,7 +47,7 @@ class Network:
 			n_test = len(test_data)
 
 		n = len(training_data)		
-
+		start = time.time() #start timer
 		for j in range(epochs):
 			random.shuffle(training_data) #Shuffle data
 			mini_batches = [
@@ -57,10 +57,10 @@ class Network:
 			for mini_batch in mini_batches:
 				self.update_mini_batch(mini_batch, eta)
 			if test_data:
-				print("Epoch {0}: {1} / {2}".format(
-					j, self.evaluate(test_data),n_test))
+				print("Epoch {0}: {1} / {2}, elapsed time: {3:.2f}s".format(
+					j, self.evaluate(test_data),n_test,time.time()-start))
 			else:
-				print("Epoch {0} complete".format(j))
+				print("Epoch {0} complete, elapsed time: {1:.2f}s".format(j,time.time()-start))
 
 
 	def update_mini_batch(self, mini_batch, eta):
